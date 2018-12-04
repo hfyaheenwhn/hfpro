@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status="OFF"，可以去掉，它的含义为是否记录log4j2本身的event信息，默认是OFF -->
+<!-- 日志的级别:TRACE,DEBUG,INFO,WARN,ERROR,FATAL -->
+<configuration status="ERROR">
+	<!-- 基本的文件的输出信息的配置 START -->
+	<properties>
+		<!-- 统一日志输出目录 -->
+		<property name="LOG_HOME">${sys:user.home}/logs/studySpace</property>
+		<!-- 统一输出格式 -->
+		<property name="PATTERN_FORMAT">[%d{yyyy-MM-dd HH:mm:ss SSS}] %-5p [%c(line:%L):(%t)] %m (consume:%-4r) %n</property>
+		<!-- 统一文件输出格式 -->
+		<property name="FILE_PATTERN">%d{yyyy-MM-dd}_%i</property>
+		<!-- 统一文件大小 -->
+		<property name="SIZE">50MB</property>
+		<!-- 统一日志划分数量 -->
+		<property name="LOG_ROLLOVER">100</property>
+		<!-- 控制台日志输出级别 -->
+		<property name="CONSOLE_LEVEL">INFO</property>
+		<!-- COMMON日志输出级别 -->
+		<property name="COMMON_LEVEL">ERROR</property>
+		<!-- HCHARTS日志输出级别 -->
+		<!-- <property name="HCHARTS_LEVEL">ERROR</property> -->
+		<!-- HIBERNATE日志输出级别 -->
+		<!-- SPRINGFRAMEWORK日志输出级别 -->
+		<property name="MYBATIS_LEVEL">INFO</property>
+		<property name="SPRINGFRAMEWORK_LEVEL">ERROR</property>
+		<!-- 统一日志输出级别 -->
+		<property name="LOG_LEVEL">ERROR</property>
+	</properties>
+	<!-- 基本的文件的输出信息的配置 END -->
+	<appenders>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<Filters>
+				<ThresholdFilter level="${CONSOLE_LEVEL}" onMatch="ACCEPT" onMismatch="NEUTRAL" />
+			</Filters>
+			<PatternLayout pattern="${PATTERN_FORMAT}" />
+		</Console>
+		<RollingRandomAccessFile name="COMMON" fileName="${LOG_HOME}/common.log" filePattern="${LOG_HOME}/common-${FILE_PATTERN}.log">
+			<PatternLayout pattern="${PATTERN_FORMAT}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="${SIZE}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${LOG_ROLLOVER}" />
+		</RollingRandomAccessFile>
+		<!-- <RollingRandomAccessFile name="HCHARTS" fileName="${LOG_HOME}/hcharts.log" filePattern="${LOG_HOME}/hcharts-${FILE_PATTERN}.log"> <PatternLayout pattern="${PATTERN_FORMAT}" /> <Policies> <SizeBasedTriggeringPolicy size="${SIZE}" /> </Policies> <DefaultRolloverStrategy max="${LOG_ROLLOVER}" 
+			/> </RollingRandomAccessFile> -->
+		<RollingRandomAccessFile name="SPRINGFRAMEWORK" fileName="${LOG_HOME}/springframework.log" filePattern="${LOG_HOME}/springframework-${FILE_PATTERN}.log">
+			<PatternLayout pattern="${PATTERN_FORMAT}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="${SIZE}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${LOG_ROLLOVER}" />
+		</RollingRandomAccessFile>
+		<RollingRandomAccessFile name="ALL" fileName="${LOG_HOME}/all.log" filePattern="${LOG_HOME}/all-${FILE_PATTERN}.log">
+			<PatternLayout pattern="${PATTERN_FORMAT}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="${SIZE}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${LOG_ROLLOVER}" />
+		</RollingRandomAccessFile>
+		<RollingRandomAccessFile name="MYBATIS" fileName="${LOG_HOME}/mybatis.log" filePattern="${LOG_HOME}/mybatis-${FILE_PATTERN}.log">
+			<PatternLayout pattern="${PATTERN_FORMAT}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="${SIZE}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${LOG_ROLLOVER}" />
+		</RollingRandomAccessFile>
+	</appenders>
+	<loggers>
+		<Logger name="com.yaheen" level="${COMMON_LEVEL}">
+			<appender-ref ref="COMMON" />
+		</Logger>
+		<Logger name="org.springframework" level="${SPRINGFRAMEWORK_LEVEL}">
+			<appender-ref ref="SPRINGFRAMEWORK" />
+		</Logger>
+		<Logger name="org.mybatis" level="${MYBATIS_LEVEL}">
+			<appender-ref ref="MYBATIS" />
+		</Logger>
+		<root level="${CONSOLE_LEVEL}">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="ALL" />
+		</root>
+	</loggers>
+</configuration>
