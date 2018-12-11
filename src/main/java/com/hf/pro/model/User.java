@@ -1,6 +1,8 @@
 package com.hf.pro.model;
 
-public class User extends RoleModel{
+public class User{
+	
+	private int id ;
 	
 	private String userName ;
 	
@@ -19,8 +21,11 @@ public class User extends RoleModel{
 		// TODO 自动生成的构造函数存根
 	}
 
-	public User(String userName, String password, String code, String phone, String address, String email) {
+
+
+	public User(int id, String userName, String password, String code, String phone, String address, String email) {
 		super();
+		this.id = id;
 		this.userName = userName;
 		this.password = password;
 		this.code = code;
@@ -28,6 +33,20 @@ public class User extends RoleModel{
 		this.address = address;
 		this.email = email;
 	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 
 	public String getUserName() {
 		return userName;

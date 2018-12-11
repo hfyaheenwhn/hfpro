@@ -6,7 +6,7 @@ spring:
     id: hfpro-01
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/hfpro?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/hfpro?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
     initialSize: 5
@@ -21,6 +21,10 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxPoolPreparedStatementPerConnectionSize: 20
+  mvc:
+    view:
+       prefix: /WEB-INF/page/jsp/
+       suffix: .jsp
 logging:
   level:
     org:
@@ -28,5 +32,4 @@ logging:
   
 mybatis:
   mapper-locations: classpath:com/hf/pro/mapper/*Mapper.xml
-  config-location: classpath:mybatis.xml
-  type-aliases-package: com.hf.pro
+  type-aliases-package: com.hf.pro.model
